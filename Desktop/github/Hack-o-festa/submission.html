@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@web3-storage/client@7.1.1/dist/bundle.min.js"></script> -->
+    <style>
+        *,
+*:before,
+*:after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background:url(https://thumbs.dreamstime.com/b/blockchain-technology-information-blocks-digital-space-decentralized-global-network-cyberspace-data-protection-d-illustration-142512492.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  
+}
+form {
+  height: 520px;
+  width: 490px;
+  background-color: rgba(255, 255, 255, 0.03);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 50px 35px;
+}
+form * {
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+}
+form h3 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 42px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 30px;
+  font-size: 16px;
+  font-weight: 500;
+}
+input {
+  display: block;
+  height: 50px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  padding: 0 10px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 300;
+}
+::placeholder {
+  color: #e1e1e1;
+}
+
+input:hover{
+  outline: 2px solid #0001;
+}
+button {
+  margin-top: 50px;
+  width: 100%;
+  background-color: #ffffff;
+  color: #080710;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 50px;
+  margin-top: 55px;
+}
+.social {
+  margin-top: 30px;
+  display: flex;
+}
+.social div {
+  background: red;
+  width: 150px;
+  border-radius: 3px;
+  padding: 5px 10px 10px 5px;
+  background-color: rgba(255, 255, 255, 0.27);
+  color: #eaf0fb;
+  text-align: center;
+}
+.social div:hover {
+  background-color: rgba(255, 255, 255, 0.47);
+  
+}
+.social .fb {
+  margin-left: 25px;
+}
+.social i {
+  margin: 10px 0 4px;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    background:url(https://thumbs.dreamstime.com/b/blockchain-technology-information-blocks-digital-space-decentralized-global-network-cyberspace-data-protection-d-illustration-142512492.jpg);
+  }
+}.con{
+    margin-top: -32px;
+    height: 10px;
+}
+    </style>
+</head>
+<body>
+    <form id="login-form">
+        <h3>Submit Your Details</h3>
+       
+        <label for="fname">First Name</label>
+        <input type="text" placeholder="First Name" id="fname">
+      
+        <label for="lname">Last Name</label>
+        <input type="text" placeholder="Last Name" id="lname">
+        <label for="amount">Amount Donated</label>
+        <input type="text" name="amt" id="amt" placeholder="Amount">
+        <div class="con">
+        <button id="submit-button">Submit</button>
+        <!-- <a href="" style="margin-left: 125px;">Already have an account</a> -->
+        <!-- <div class="social">
+          <div class="go" style="cursor: pointer;"><i class="fa fa-google" ></i> Google</div>
+          <div class="fb" style="cursor: pointer;"><i class="fa fa-facebook" ></i> Facebook</div>
+        </div> -->
+    </div>
+      </form>
+      <div id="show" style="background-color: red; margin-top: 2px; border: 2px solid transparent black;"></div>
+      <script>
+        const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFkODc0OTY3MEQwMDY1MzBiNzJGMzNjMTNlOTc2YjBkM2M4MEREYzkiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2ODIyMTY3NjYwNDgsIm5hbWUiOiJIYWNrb2ZpZXN0YSJ9.hFTOPW5ppNDfw3tQt9s_K5fOb5mLlJQYDYyfasNnu6M';
+const client = new Web3Storage({ token: process.env.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFkODc0OTY3MEQwMDY1MzBiNzJGMzNjMTNlOTc2YjBkM2M4MEREYzkiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2ODIyMTY3NjYwNDgsIm5hbWUiOiJIYWNrb2ZpZXN0YSJ9.hFTOPW5ppNDfw3tQt9s_K5fOb5mLlJQYDYyfasNnu6M });
+
+const loginForm = document.querySelector('#submit-button');
+
+loginForm.addEventListener('click', async (e) => {
+  e.preventDefault();
+  const date = new Date();
+
+let currentDay= String(date.getDate()).padStart(2, '0');
+
+let currentMonth = String(date.getMonth()+1).padStart(2,"0");
+
+let currentYear = date.getFullYear();
+
+let currentDate = `${currentDay}-${currentMonth}-${currentYear}`;
+  // Collect form data
+  const formData = {
+    firstname: document.querySelector('#fname').value,
+    lastname: document.querySelector('#lname').value,
+    amount: document.querySelector('#amt').value,
+    date: currentDate,
+  };
+
+  // Create a new File object
+  const file = new File([JSON.stringify(formData)], 'login.json', {
+    type: 'application/json',
+  });
+
+  // Upload the file to web3.storage
+  const cid = await client.put([file]);
+//   console.log(`Login form uploaded to web3.storage with CID: ${cid}`);
+ let appear = document.getElementById('show')
+ appear.innerHTML = `Your CID is: ${cid}`;
+});
+    </script>
+</body>
+</html>
